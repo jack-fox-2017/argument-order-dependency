@@ -2,37 +2,49 @@
 
 class House {
 
-  constructor(address, square_feet, num_bedrooms, num_baths, cost, down_payment, sold, short_sale, has_tenants) {
-    this.address = address
-    this.square_feet = square_feet
-    this.num_bedrooms = num_bedrooms || 3
-    this.num_baths = num_baths || 2
-    this.cost = cost || 320000
-    this.down_payment = down_payment || 0.20
-    this.sold = sold || false
-    this.short_sale = short_sale
-    this.has_tenants = has_tenants || false
+  constructor(komponen) {
+    this.address = komponen['address']
+    this.square_feet = komponen['square_feet']
+    this.num_bedrooms = komponen['num_bedrooms']
+    this.num_baths = komponen['num_baths']
+    this.cost = komponen['cost']
+    this.down_payment = komponen['down_payment']
+    this.sold = komponen.sold
+    this.short_sale = komponen['short_sale']
+    this.has_tenants = komponen['has_tenants']
   }
 
   obscure_address() {
-    this.address.replace(/.{10}$/g, '****')
+    return this.address.replace(/.{10}$/g, '****')
   }
 
   buy(money, good_credit) {
-    if (money >= down_payment && good_credit) {
+    if (money >= this.down_payment && good_credit) {
       this.sold = true
     }
   }
 
   down_payment() {
-    return cost * this.down_payment
+    return this.cost*this.down_payment
   }
 
   to_s() {
-    return `${this.obscure_address()} : ${this.square_feet} sq. ft., ${this.num_bedrooms} bed, ${this.num_baths} bath. ${this.cost}`
+    return `Alamat di ${this.obscure_address()}, Luasnya ${this.square_feet} sq. ft., ${this.num_bedrooms} bed , ${this.num_baths} bath.
+            Harganya yaitu $${this.cost}`
+
   }
 }
 
-const cool = new House('address', 100, 2, 2, 12345, 12345, true, true)
+const cool = new House({address:'Jakarta',
+                        square_feet: 100,
+                        num_bedrooms: 2,
+                        num_baths: 2,
+                        cost: 12345,
+                        down_payment: 0.2,
+                        sold: true,
+                        short_sale: true,
+                        has_tenants:true
+                        })
+//, 100, 2, 2, 12345, 12345, true, true
 
-console.log(cool.to_s())
+console.log(cool.to_s());
